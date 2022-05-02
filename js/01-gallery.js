@@ -8,7 +8,7 @@ const markup = galleryItems
     <img
       class="gallery__image"
       src="${preview}"
-      data-source="${original}"
+      data-original="${original}"
       alt="${description}"
     />
   </a>
@@ -24,7 +24,7 @@ gallery.addEventListener("click", (e) => {
     return;
   }
   basicLightbox
-    .create(`<img class="modal" src="${e.target.dataset.source}"/>`, {
+    .create(`<img class="modal" src="${e.target.dataset.original}"/>`, {
       onShow: (instance) => {
         window.addEventListener("keydown", (e) => {
           if (e.code === "Escape") {
