@@ -18,20 +18,30 @@ const markup = galleryItems
 
 gallery.insertAdjacentHTML("beforeend", markup);
 
-gallery.addEventListener("click", (e) => {
+function onEsc(e) {
+  if (e.code === "Escape") {
+    onEsc.instaceRef.close();
+  }
+}
+
+function showFullImage(e) {
   e.preventDefault();
+
   if (e.target.nodeName !== "IMG") {
     return;
   }
+
   basicLightbox
     .create(`<img class="modal" src="${e.target.dataset.original}"/>`, {
       onShow: (instance) => {
-        window.addEventListener("keydown", (e) => {
-          if (e.code === "Escape") {
-            instance.close();
-          }
-        });
+        onEsc.instaceRef = instance;
+        window.addEventListener("keydown", onEsc);
+      },
+      onClose: () => {
+        window.removeEventListener("keydown", onEsc);
       },
     })
     .show();
-});
+}
+
+gallery.addEventListener("click", showFullImage);
